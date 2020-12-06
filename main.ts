@@ -1,8 +1,3 @@
-function Main_Menu_Maker () {
-    blockMenu.showMenu(["Play", "Instructions"], MenuStyle.List, MenuLocation.BottomHalf)
-    blockMenu.setColors(1, 8)
-    blockMenu.setControlsEnabled(true)
-}
 function start_next_level () {
     tiles.setTilemap(tiles.createTilemap(hex`3c000800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202`, img`
         ............................................................
@@ -47,6 +42,14 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
         mySprite.vx = mySprite.vx * -1
     }
 })
+function Main_Menu_Maker () {
+    blockMenu.showMenu(["Play", "Instructions"], MenuStyle.List, MenuLocation.BottomHalf)
+    blockMenu.setColors(1, 8)
+    blockMenu.setControlsEnabled(true)
+}
+statusbars.onZero(StatusBarKind.Health, function (status) {
+    game.over(false, effects.bubbles)
+})
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     mySprite.setImage(img`
         ..................bbb...........
@@ -82,8 +85,17 @@ blockMenu.onMenuOptionSelected(function (option, index) {
         blockMenu.closeMenu()
         blockMenu.setControlsEnabled(false)
         textSprite.destroy(effects.bubbles, 700)
+        Level = 1
         timer.after(1500, function () {
-            Level = 1
+            scene.setBackgroundColor(1)
+            statusbar = statusbars.create(50, 5, StatusBarKind.Health)
+            Level_display = textsprite.create("Nautical Mile: " + Level, 0, 8)
+            Level_display.setMaxFontHeight(8)
+            Level_display.setFlag(SpriteFlag.RelativeToCamera, true)
+            statusbar.setPosition(31, 10)
+            Level_display.setPosition(110, 10)
+            statusbar.value = 100
+            statusbar.max = 100
             mySprite = sprites.create(img`
                 ...........bbb..................
                 ...........b1b45................
@@ -111,14 +123,22 @@ blockMenu.onMenuOptionSelected(function (option, index) {
                 `, SpriteKind.Player)
             scene.cameraFollowSprite(mySprite)
             start_next_level()
-            mySprite.startEffect(effects.bubbles)
+            mySprite.startEffect(effects.fountain)
             mySprite.setVelocity(-30, 0)
+            for (let index2 = 0; index2 < 6; index2++) {
+                tiles.setTileAt(tiles.getTileLocation(randint(0, 59), 7), myTiles.tile2)
+            }
+            statusbar_created = true
         })
     }
 })
+let Level_display: TextSprite = null
+let statusbar: StatusBarSprite = null
 let Level = 0
 let mySprite: Sprite = null
 let textSprite: TextSprite = null
+let statusbar_created = false
+statusbar_created = false
 scene.setBackgroundColor(8)
 textSprite = textsprite.create("NAUTICAL", 0, 1)
 textSprite.startEffect(effects.bubbles)
@@ -127,4 +147,9 @@ textSprite.setPosition(70, -20)
 story.spriteMoveToLocation(textSprite, 70, 15, 50)
 timer.after(800, function () {
     Main_Menu_Maker()
+})
+game.onUpdateInterval(1000, function () {
+    if (statusbar_created == true) {
+        statusbar.value += -1
+    }
 })
