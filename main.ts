@@ -1,6 +1,6 @@
 scene.onOverlapTile(SpriteKind.Projectile, myTiles.tile2, function (sprite, location) {
     tiles.setTileAt(location, myTiles.tile3)
-    statusbar.value += 8
+    statusbar.value += 7
 })
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     projectile = sprites.createProjectileFromSprite(img`
@@ -21,7 +21,7 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
         . . . b b b b . . . . . . . . . 
         . . . b b b b . . . . . . . . . 
         `, mySprite, 0, 70)
-    statusbar.value += -5
+    statusbar.value += -4
 })
 controller.right.onEvent(ControllerButtonEvent.Repeated, function () {
     mySprite.vx = 75
@@ -152,7 +152,6 @@ blockMenu.onMenuOptionSelected(function (option, index) {
                 tiles.setTileAt(tiles.getTileLocation(randint(0, 59), 7), myTiles.tile2)
             }
             statusbar_created = true
-            mySprite.setFlag(SpriteFlag.ShowPhysics, true)
         })
     } else {
         game.showLongText("You play as a research submarine. Every second you lose energy. Use \"ENTER\" or \"X\" to shoot out a projectile. This will drain a little energy. This projectile must collide with the energy plants. Doing this will give you more energy. Press the \"LEFT\" or \"RIGHT\" arrow keys to switch directions. Hold down \"LEFT\" or \"RIGHT\" to move faster in that direction. This will cost you extra energy. Avoid the Dark Submarines by moving up or down. Colliding with them will drain some energy.", DialogLayout.Full)
@@ -212,8 +211,50 @@ game.onUpdate(function () {
             for (let index = 0; index < 3; index++) {
                 tiles.setTileAt(tiles.getTileLocation(randint(0, 59), 7), myTiles.tile2)
             }
+        } else if (Level == 7) {
+            for (let index = 0; index < 2; index++) {
+                tiles.setTileAt(tiles.getTileLocation(randint(0, 59), 7), myTiles.tile2)
+            }
+        } else if (Level == 8) {
+            for (let index = 0; index < 2; index++) {
+                tiles.setTileAt(tiles.getTileLocation(randint(0, 59), 7), myTiles.tile2)
+            }
+        } else {
             game.showLongText("YOU HAVE BEATEN THE GAME", DialogLayout.Bottom)
             game.over(true, effects.bubbles)
+        }
+    }
+})
+game.onUpdateInterval(1900, function () {
+    if (statusbar_created == true) {
+        if (Level == 2) {
+            Dark_Submarine = sprites.create(img`
+                ................................
+                ................................
+                ................................
+                ................................
+                ................................
+                .................fff............
+                ...............cff1f............
+                ...............cff1f............
+                ...............c.fff............
+                ...............ff...............
+                ..............ffff..............
+                .....fcccccccccccccccccccccccc..
+                ....ffceeeceeeceeeceeeceeeceeec.
+                ....ffce1efe1efe1efe1efe1efe1ec.
+                ....ffceeeceeeceeeceeeceeeceeec.
+                ....ffccccccccccccccccccccccccc.
+                ....ffcccccccccccccccccccccccff.
+                .....fffffffffffffffffffffffff..
+                ..............ccc...............
+                .............ccccc..............
+                .............fffff..............
+                ................................
+                ................................
+                `, SpriteKind.Enemy)
+            Dark_Submarine.setVelocity(60, 0)
+            tiles.placeOnTile(Dark_Submarine, tiles.getTileLocation(0, randint(4, 7)))
         }
     }
 })
@@ -253,9 +294,9 @@ game.onUpdateInterval(2000, function () {
 game.onUpdateInterval(1000, function () {
     if (statusbar_created == true) {
         if (mySprite.vx == 75) {
-            statusbar.value += -3
+            statusbar.value += -2
         } else if (mySprite.vx == -75) {
-            statusbar.value += -3
+            statusbar.value += -2
         } else {
             statusbar.value += -1
         }
