@@ -111,8 +111,9 @@ blockMenu.onMenuOptionSelected(function (option, index) {
         blockMenu.closeMenu()
         blockMenu.setControlsEnabled(false)
         textSprite.destroy(effects.bubbles, 700)
+        mySprite2.destroy(effects.bubbles, 700)
         Level = 1
-        timer.after(1500, function () {
+        timer.after(2000, function () {
             scene.setBackgroundColor(1)
             statusbar = statusbars.create(100, 5, StatusBarKind.Health)
             statusbar.setPosition(80, 5)
@@ -170,6 +171,7 @@ let Dark_Submarine: Sprite = null
 let mySprite: Sprite = null
 let projectile: Sprite = null
 let statusbar: StatusBarSprite = null
+let mySprite2: Sprite = null
 let textSprite: TextSprite = null
 let statusbar_created = false
 statusbar_created = false
@@ -179,6 +181,34 @@ textSprite.startEffect(effects.bubbles)
 textSprite.setMaxFontHeight(12)
 textSprite.setPosition(70, -20)
 story.spriteMoveToLocation(textSprite, 70, 15, 50)
+timer.after(500, function () {
+    mySprite2 = sprites.create(img`
+        ...........bbb..................
+        ...........b1b45................
+        ...........b9b455...............
+        ...........bbb.55...............
+        ...............55...............
+        ...............55...............
+        ...............44...............
+        ..............bbbb..............
+        ..5555555555555555555555555555..
+        .555555555555555555555555555554.
+        55555555555555555555555555555544
+        55555555555555555555555555555544
+        55555bbb5bbb5bbb5bbb5bbb5bbb5544
+        55555b9b4b9b4b9b4b9b4b9b4b9b5544
+        55555bbb5bbb5bbb5bbb5bbb5bbb5544
+        55555555555555555555555555555544
+        44555555555555555555555555555544
+        44445555555555555555555555554444
+        .444444444444444444444444444444.
+        ..4444444444444444444444444444..
+        ..............bbb...............
+        .............bbbbb..............
+        .............ccccc..............
+        `, SpriteKind.Player)
+    mySprite2.setPosition(70, 42)
+})
 timer.after(800, function () {
     Main_Menu_Maker()
 })
