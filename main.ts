@@ -154,7 +154,7 @@ blockMenu.onMenuOptionSelected(function (option, index) {
             statusbar_created = true
         })
     } else {
-        game.showLongText("You play as a research submarine. Every second you lose energy. Use \"ENTER\" or \"X\" to shoot out a projectile. This will drain a little energy. This projectile must collide with the energy plants. Doing this will give you more energy. Press the \"LEFT\" or \"RIGHT\" arrow keys to switch directions. Hold down \"LEFT\" or \"RIGHT\" to move faster in that direction. This will cost you extra energy. Avoid the Dark Submarines by moving up or down. Colliding with them will drain some energy.", DialogLayout.Full)
+        game.showLongText("You play as a research submarine. Every second you lose energy. Use \"ENTER\" or \"X\" to shoot out a projectile. This will drain a little energy. This projectile must collide with the energy plants. Doing this will give you more energy. Press the \"LEFT\" or \"RIGHT\" arrow keys to switch directions. Hold down \"LEFT\" or \"RIGHT\" to move faster in that direction. This will cost you extra energy. Avoid the Dark Submarines by moving up or down. Colliding with them will drain some energy. Every time you enter another level, you gain some extra health.", DialogLayout.Full)
     }
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
